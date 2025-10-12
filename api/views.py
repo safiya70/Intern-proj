@@ -165,12 +165,12 @@ class UserLoginView(APIView):
                 token = get_tokens_for_user(user)
                 # Set redirect_url based on user role
                 if user.role == 'recruiter':
-                    redirect_url = ('http://localhost:3000/recruiter-dashboard')
+                    redirect_url = ('http://localhost:3001/recruiter-dashboard')
                     
                 elif user.role == 'freelancer':
-                    redirect_url = ('http://localhost:3000/freelancer-dashboard')
+                    redirect_url = ('http://localhost:3001/freelancer-dashboard')
                 else:
-                    redirect_url = ('http://localhost:3000/home')
+                    redirect_url = ('http://localhost:3001/home')
                 #print("User role:", user.role, "Redirect URL:", redirect_url)
                 return Response({
                     "token": token,

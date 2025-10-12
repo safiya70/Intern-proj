@@ -2,13 +2,6 @@
   "name": "freelanceconnect-frontend",
   "version": "0.1.0",
   "private": true,
-  
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "react-scripts": "5.0.1"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,5 +26,13 @@
       "last 1 safari version"
     ]
   },
-  "proxy" : "http://127.0.0.1:8000"
+  "proxy": "http://127.0.0.1:8000",
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.4"
+  }
 }

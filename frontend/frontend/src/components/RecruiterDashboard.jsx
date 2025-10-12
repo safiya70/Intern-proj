@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RecruiterDashboard.css';
+import Chat from './Chat';
 
 const RecruiterDashboard = () => {
   const navigate = useNavigate();
+  const [isChatOpen, setIsChatOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -35,6 +37,10 @@ const RecruiterDashboard = () => {
       alert(err.message);
       navigate('/');
     }
+  };
+
+  const handleLexi = () => {
+    setIsChatOpen(!isChatOpen);
   };
 
   const handleProfile = () => {
@@ -74,6 +80,9 @@ const RecruiterDashboard = () => {
           <h1>Welcome! Recruiter</h1>
         </div>
         <div className="header-buttons">
+          <button ClassName ="header-btn" onClick={handleLexi}>
+            <span className="robot-icon" role="img" aria-label="robot">🤖</span> LEXI AI
+          </button>
           <button className="header-btn" onClick={handleProfile}>
             Profile
           </button>
@@ -225,6 +234,8 @@ const RecruiterDashboard = () => {
           </form>
         </div>
       </div>
+      {/* Conditional rendering: Only show Chat when isChatOpen is true */}
+      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
     </div>
   );
 };

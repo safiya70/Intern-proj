@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FreelancerDashboard.css';
+import Chat from './Chat';
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleLogout = async () => {
     
@@ -31,6 +34,9 @@ const FreelancerDashboard = () => {
       navigate('/');
     }
   };
+  const handleLexi = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   const handleProfile = () => {
     console.log('Navigating to freelancer profile...');
@@ -50,6 +56,10 @@ const FreelancerDashboard = () => {
           <h1>Welcome! Freelancer</h1>
         </div>
         <div className="header-buttons">
+          <button ClassName ="header-btn" onClick={handleLexi}>
+            <span className="robot-icon" role="img" aria-label="robot">🤖</span> LEXI AI
+          </button>
+        
           <button className="header-btn" onClick={handleProfile}>
             Profile
           </button>
@@ -145,9 +155,10 @@ const FreelancerDashboard = () => {
           </div>
         </div>
       </div>
+      {/* Conditional rendering: Only show Chat when isChatOpen is true */}
+      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
     </div>
   );
 };
-
 export default FreelancerDashboard;
 

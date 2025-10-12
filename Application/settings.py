@@ -103,9 +103,9 @@ print(os.path.exists(os.path.join(MEDIA_ROOT, 'profile_photos', 'Passport_photo.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Freelancers',
+        'NAME': 'freelancer',
         'USER' : 'postgres',
-        'PASSWORD':'Prasad',
+        'PASSWORD':'safiya',
         'HOST':'localhost'
         
     }
@@ -220,8 +220,8 @@ CORS_ALLOWED_ORIGINS = [
 
     "http://localhost:8080",
     "http://127.0.0.1:9000",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
 ]
 
 CORS_ALLOW_METHODS = (
