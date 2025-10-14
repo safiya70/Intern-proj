@@ -235,7 +235,13 @@ const RecruiterDashboard = () => {
         </div>
       </div>
       {/* Conditional rendering: Only show Chat when isChatOpen is true */}
-      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
+      {isChatOpen && (
+        <Chat
+          onClose={() => setIsChatOpen(false)}
+          userRole='recruiter'
+        />
+      )}
+
     </div>
   );
 };

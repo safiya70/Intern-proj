@@ -502,5 +502,38 @@
     grid-template-columns: 1fr;
     min-width: 0;
   }
+  
+.chat-fab-btn {
+    /* CRITICAL: Pins it to the screen viewport */
+    position: fixed; 
+    bottom: 30px;    /* Distance from the bottom edge */
+    right: 30px;     /* Distance from the right edge */
+    z-index: 1001;   /* Ensure it's on top of all other elements */
+    
+    /* Appearance (based on your existing styles) */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #EC4186, #EE544A);
+    border: 3px solid #38124A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4), 
+                0 0 20px rgba(236, 65, 134, 0.6);
+    transition: all 0.3s ease;
+}
+
+.chat-fab-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(236, 65, 134, 0.7);
+}
+
+.chat-fab-btn .robot-icon {
+    font-size: 1.8rem; 
+    line-height: 1;
+    color: #FFFFFF; /* Ensure the robot icon inside is white */
+}
 }
 

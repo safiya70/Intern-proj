@@ -1,214 +1,230 @@
-/* Full-Screen Overlay */
-.chat-overlay-full-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1A0A26, #380E4C); /* Dark Purple Gradient */
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Start content at the top */
-    color: #FFFFFF;
+/* Chat Overlay and Window */
+.chat-overlay {
+  position: fixed;
+  bottom: 30px; /* Position it in the bottom right corner */
+  right: 30px;
+  z-index: 1000; /* Ensure it floats above the dashboard content */
+  pointer-events: none; /* Allows clicks to go through if chat is hidden/minimised (for now) */
 }
 
-/* Main Chat Window (Container for content) */
-.chat-window-full-screen {
-    width: 100%;
-    max-width: 800px; /* Optional: Constrain the width */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.chat-window {
+  width: 350px;
+  height: 500px;
+  background: rgba(56, 18, 74, 0.95); /* Matches dashboard stats background */
+  backdrop-filter: blur(20px);
+  border: 2px solid #EC4186; /* Accent border */
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px #EC4186;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto; /* Re-enable clicks inside the window */
+  transform: scale(1);
+  transition: transform 0.3s ease-out;
 }
 
-/* Header/Title Bar */
-.chat-header-full-screen {
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
+/* Chat Header */
+
+.chat-header {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(90deg, #EC4186, #EE544A);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.chat-title-main {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #EE544A; /* Accent color */
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(236, 65, 134, 0.5);
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.close-btn-full-screen {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #FFFFFF;
-    font-size: 2rem;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
+.robot-icon {
+  font-size: 1.3rem;
 }
 
-.close-btn-full-screen:hover {
-    opacity: 1;
+.close-btn {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+  opacity: 1;
 }
 
 /* Chat Body (Message Area) */
-.chat-body-full-screen {
-    flex-grow: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+.chat-body {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-/* Message Rows and Bubbles */
+/* Custom Scrollbar for Chat Body */
+.chat-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+  background-color: #EE544A;
+  border-radius: 10px;
+}
+
+.chat-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+
+/* Message Bubbles */
+.message-bubble {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
 .message-row {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: flex-start; /* Align icons and bubble top edge */
+    gap: 8px;
+    max-width: 100%;
 }
-
+.message-row.ai {
+    justify-content: flex-start;
+}
 .message-row.user {
-    justify-content: flex-end;
-    flex-direction: row-reverse; /* Swap icon and bubble for user */
+    align-self: flex-end;
+    width: fit-content;
+    max-width: 100%;
+    display:flex;
+    flex-direction: row-reverse; /* Puts the icon on the right */
 }
+.message-row.user .message-bubble {
+ /* Original User Background */
+background: linear-gradient(135deg, #1A237E, #3F51B5); 
+border-bottom-right-radius: 4px; 
 
+/* ADDED BORDER for User Message */
+border: 1px solid rgba(255, 255, 255, 0.4); 
+align-self: flex-start;/* Subtle white/light border */
+}
+/* Modified AI Bubble Style */
+.message-row.ai .message-bubble {
+ /* Original AI Background */
+  background: #38124A; 
+  border-top-left-radius: 4px; 
+/* MODIFIED BORDER for AI Message (Replaced old partial border) */
+  border: 1px solid #EC4186; /* Accent color border */
+}
 .profile-icon {
-    font-size: 1.2rem;
-    padding: 8px;
+    font-size: 1rem;
+    padding: 6px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0; /* Prevents shrinking */
+    flex-shrink: 0; 
+    color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
-
 .message-row.ai .profile-icon {
-    background: #EC4186; /* AI (Lexi) Icon Background */
+    background: linear-gradient(135deg, #EC4186, #EE544A); 
 }
 
 .message-row.user .profile-icon {
-    background: #3F51B5; /* User Icon Background */
+    background: #3F51B5;
 }
 
-.message-bubble-full-screen {
-    max-width: 60%;
-    padding: 12px 18px;
-    border-radius: 25px;
-    color: #FFFFFF;
-    font-size: 1.1rem;
-    line-height: 1.4;
-    word-wrap: break-word;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+.suggestions-container {
+    padding: 10px 0;
+    margin-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
-
-.message-row.ai .message-bubble-full-screen {
-    background: linear-gradient(135deg, #EC4186, #EE544A); /* Gradient for AI messages */
-    border-top-left-radius: 4px;
-}
-
-.message-row.user .message-bubble-full-screen {
-    background: #38124A; /* Dark purple background for user messages */
-    border: 1px solid rgba(236, 65, 134, 0.5);
-    border-top-right-radius: 4px;
-}
-
-/* Suggestions Container */
-.suggestions-container-full-screen {
-    padding: 15px 0;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
 .suggestions-prompt {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
     margin-bottom: 10px;
     font-style: italic;
+    padding-left: 5px;
 }
-
 .suggestions-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
-
-.suggestion-btn-full-screen {
-    background: rgba(236, 65, 134, 0.1); /* Light transparent background */
-    color: #EC4186; /* Text color */
-    border: 1px solid #EC4186;
-    border-radius: 25px;
-    padding: 10px 15px;
-    font-size: 0.95rem;
+.suggestion-btn {
+    background: rgba(236, 65, 134, 0.15);
+    color: #EC4186;
+    border: 1px solid rgba(236, 65, 134, 0.5);
+    border-radius: 16px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    flex-shrink: 0; /* Prevents buttons from collapsing */
+    flex-grow: 1; 
+    min-width: fit-content;
+    text-align: center; /* Ensure text is centered */
 }
-
-.suggestion-btn-full-screen:hover {
+.suggestion-btn:hover {
     background: #EC4186;
     color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(236, 65, 134, 0.4);
+}
+/* Chat Input Area */
+.chat-input-form {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid rgba(236, 65, 134, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+  align-items:center;
 }
 
-/* Input Form */
-.chat-input-form-full-screen {
-    width: 100%;
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+.chat-input {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #6A1B9A;
+  border-radius: 20px;
+  margin-right: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+  line-height:1.2;
 }
 
-.chat-input-full-screen {
-    flex-grow: 1;
-    padding: 10px 15px;
-    border: none;
-    background-color: transparent;
-    color: #FFFFFF;
-    font-size: 1.1rem;
-    outline: none;
+
+.send-btn {
+  background: linear-gradient(90deg, #EC4186, #EE544A);
+  border: none;
+  border-radius: 20px;
+  padding: 0.75rem 1.25rem;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink:0;
+  font-size:0.95rem;
 }
 
-.chat-input-full-screen::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.emoji-btn,
-.send-btn-full-screen {
-    background: none;
-    border: none;
-    color: #EC4186;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 8px;
-    transition: transform 0.2s;
-}
-
-.send-btn-full-screen {
-    font-size: 1.3rem; /* Smaller for the pencil icon */
-    background: linear-gradient(45deg, #EC4186, #EE544A);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
-}
-
-.emoji-btn:hover,
-.send-btn-full-screen:hover {
-    transform: scale(1.1);
+.send-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 15px rgba(236, 65, 134, 0.7);
 }

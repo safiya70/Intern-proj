@@ -1,13 +1,16 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FreelancerDashboard.css';
-import Chat from './Chat';
+import Chat from './Chat'; // Assuming Chat component is the full pop-up window
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
 
+  // State controls the visibility of the Chat window/FAB
   const [isChatOpen, setIsChatOpen] = useState(false);
 
+  // Function to toggle the chat window state
+  
   const handleLogout = async () => {
     
     const accessToken = localStorage.getItem('accessToken');
@@ -40,7 +43,6 @@ const FreelancerDashboard = () => {
 
   const handleProfile = () => {
     console.log('Navigating to freelancer profile...');
-
     navigate('/freelancer-profile');
   };
 
@@ -59,7 +61,6 @@ const FreelancerDashboard = () => {
           <button ClassName ="header-btn" onClick={handleLexi}>
             <span className="robot-icon" role="img" aria-label="robot">🤖</span> LEXI AI
           </button>
-        
           <button className="header-btn" onClick={handleProfile}>
             Profile
           </button>
@@ -155,10 +156,27 @@ const FreelancerDashboard = () => {
           </div>
         </div>
       </div>
+      
+      {/* 4. NEW: Floating Action Button (FAB) for Lexi AI */}
+      <button 
+        className="chat-fab-btn" 
+        onClick={handleLexi} 
+        aria-label="Open Lexi AI Chatbot"
+      >
+        {/* Use the same icon as before */}
+        <span className="robot-icon" role="img" aria-label="robot">🤖</span>
+      </button>
+
       {/* Conditional rendering: Only show Chat when isChatOpen is true */}
-      {isChatOpen && <Chat onClose={() => setIsChatOpen(false)} />}
+      {isChatOpen && (
+        <Chat
+          onClose={() => setIsChatOpen(false)}
+          userRole='freelancer'
+        />
+      )}
+
     </div>
   );
+  
 };
 export default FreelancerDashboard;
-
