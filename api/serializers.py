@@ -250,5 +250,17 @@ class JobSerializer(serializers.ModelSerializer):
         model = Job
         fields = ['title','description','Responsibilities','skills_required','experience_required','recruiter_id']
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'role') # Ensure 'role' is on your User model
 
+class ConversationSerializer(serializers.ModelSerializer):
+    # Use the custom serializer for participants
+    participants = UserSerializer(many=True, read_only=True) 
+
+    class Meta:
+        model = Conversation
+        fields = ('id', 'participants', 'updated_at')
+        # You will need to add 'unread_count' logic in the ViewSet or a custom method later
 

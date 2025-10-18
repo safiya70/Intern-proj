@@ -269,3 +269,47 @@ class JobListCreateView(APIView):
         jobs = Job.objects.filter(created_at__isnull=False).all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class ConversationViewSet(viewsets.ModelViewSet):
+    queryset = Conversation.objects.all()
+    serializer_class = ConversationSerializer
+    # permission_classes = [IsAuthenticated] # MUST be secured
+
+    def get_queryset(self):
+        # Only show conversations the current user is a participant in
+        return self.queryset.filter(participants=self.request.user)
+
+    @action(detail=False, methods=['post'])
+    def create_conversation(self, request):
+        # 1. Get IDs
+        current_user = request.user
+        other_user_id = request.data.get('participant_id')
+        
+        if not other_user_id:
+            return Response({'detail': 'participant_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 2. Find the other user
+        try:
+            other_user = User.objects.get(id=other_user_id)
+        except User.DoesNotExist:
+            return Response({'detail': 'Participant not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # 3. Check for existing conversation
+        # This checks for conversations where (user1 and user2) OR (user2 and user1) are participants
+        existing_conv = Conversation.objects.filter(
+            participants=current_user
+        ).filter(
+            participants=other_user
+        ).first()
+
+        if existing_conv:
+            # Conversation exists, return it
+            serializer = self.get_serializer(existing_conv)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # 4. Create New Conversation
+        new_conv = Conversation.objects.create()
+        new_conv.participants.add(current_user, other_user)
+        
+        serializer = self.get_serializer(new_conv)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

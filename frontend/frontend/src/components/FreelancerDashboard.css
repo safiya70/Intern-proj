@@ -535,5 +535,37 @@
     line-height: 1;
     color: #FFFFFF; /* Ensure the robot icon inside is white */
 }
+/* Style for the new Messages icon button */
+.message-icon-btn {
+    /* Override default button padding to make it a neat square/circle */
+    padding: 12px 12px; 
+    width: 50px;      
+    height: 50px;
+    
+    /* Make it circular */
+    border-radius: 50%;
+    
+    /* Ensure the icon is centered */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Remove text gradient if present, just use a solid color for the icon */
+    background: linear-gradient(90deg, #EC4186, #EE544A); 
+}
+
+/* Style for the icon itself (the emoji in this case) */
+.message-icon {
+    font-size: 1.5rem; /* Adjust size to fit the button */
+    line-height: 1; 
+    color: #FFFFFF; /* White icon color */
+}
+
+/* Optional: Ensure all buttons in the header are vertically aligned */
+.header-buttons {
+    display: flex;
+    align-items: center; 
+    gap: 1rem;
+}
 }
 

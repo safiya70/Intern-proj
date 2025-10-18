@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
+from rest_framework.routers import DefaultRouter
+from .views import ConversationViewSet
+
+router = DefaultRouter()
+# Register the viewset for general conversation listing and retrieval
+router.register(r'conversations', ConversationViewSet, basename='conversation')
 
 urlpatterns = [
     path('Freelancers/',views.Freelancers,name='Freelancers'),
@@ -14,4 +20,8 @@ urlpatterns = [
     path('accounts/reset/<uid>/<token>/',views.PasswordResetView.as_view(),name='reset_password'),
     path('accounts/logout/',views.LogoutView.as_view(),name='logout'),
     path('accounts/jobs/',views.JobListCreateView.as_view(),name='job_postings'),
+    path('conversations/create/', 
+         ConversationViewSet.as_view({'post': 'create_conversation'}), 
+         name='conversation-create'),
+    path('', include(router.urls)),
 ]

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Connection Test</h1>
+    <p id="status">Attempting to connect...</p>
+    <p id="messages"></p>
+
+    <script>
+        // Ensure this URL is TYPED EXACTLY as it should be
+        const roomName = 'room1'; 
+        const socketUrl = 'ws://127.0.0.1:8000/ws/chat/' + roomName + '/';
+
+        // Use 127.0.0.1 instead of localhost for consistency
+        console.log('Connecting to:', socketUrl);
+
+        const chatSocket = new WebSocket(socketUrl);
+
+        chatSocket.onopen = function(e) {
+            document.getElementById('status').textContent = 'Status: ✅ Connected Successfully!';
+            console.log('Successfully connected to the WebSocket.');
+            chatSocket.send(JSON.stringify({'message': 'Hello from the browser!'}));
+        };
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.getElementById('messages').innerHTML += `<p>Received: ${data.message}</p>`;
+            console.log('Message received:', data);
+        };
+
+        chatSocket.onclose = function(e) {
+            document.getElementById('status').textContent = 'Status: ❌ Disconnected. Code: ' + e.code;
+            console.error('Chat socket closed unexpectedly', e);
+        };
+    </script>
+</body>
+</html>

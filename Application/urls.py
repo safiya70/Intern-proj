@@ -30,10 +30,7 @@ urlpatterns = [
     path('Hello/', include('Hello.urls')),
     path('recruiter/', include('recruiter.urls')),
     path('accounts/', include('accounts.urls')),
-    
-    
-    #api endpoints
-    path('api/v1/',include('api.urls')),
+    path('api/', include('api.urls')),
 
 ]
 

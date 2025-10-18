@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/5.2/ref/settings/
+https://docs.djangoproject.com/en/5.2/ref/settings/#values
 """
 
 from pathlib import Path
@@ -34,6 +34,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Existing Apps
+    # Put daphne here, possibly before django.contrib.staticfiles
+    'daphne',
     'Hello.apps.HelloConfig',
     'api.apps.ApiConfig',
     'recruiter.apps.RecruiterConfig',
@@ -50,8 +53,8 @@ INSTALLED_APPS = [
     'sendgrid',
     'rest_framework_simplejwt.token_blacklist',
     'phonenumber_field',
-    
-    
+    'channels', 
+    'chat',
     
 ]
 
@@ -88,6 +91,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Application.wsgi.application'
+
+# 🌟 NEW: Define the ASGI Application for Channels 🌟
+ASGI_APPLICATION = 'Application.asgi.application'
 
 
 MEDIA_URL = '/media/'
@@ -232,3 +238,19 @@ CORS_ALLOW_METHODS = (
     "POST",
     "PUT",
 )
+
+# =======================================================
+# 🌟 NEW: DJANGO CHANNELS / REDIS CONFIGURATION (for Real-time) 🌟
+# =======================================================
+
+# This specifies the channel layer for real-time communication, using Redis as the backend.
+# You MUST have a Redis server running on 127.0.0.1:6379 for this to work in development.
+# --- LIKELY INCORRECT CODE that causes the error ---
+# Missing the outer dictionary curly braces, making it a tuple of dictionaries
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
+
+
